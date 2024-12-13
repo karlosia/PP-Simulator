@@ -5,8 +5,8 @@
     private int agility;
     public int Agility
     {
-        get => agility;
-        set => agility = value < 0 ? 0 : (value > 10 ? 10 : value);
+        get { return agility;  }
+        init { agility = Validator.Limiter(value, 0, 10); }
     }
 
     public Elf() : base() { }
@@ -29,9 +29,11 @@
 
         if (singCount % 3 == 0)
         {
-            Agility = Agility < 10 ? Agility + 1 : 10; 
+            agility++; 
             Console.WriteLine($"{Name}'s agility increased to {Agility}!");
         }
     }
+
+    public override string Info => $"[{Agility}]";
     public override int Power => (Level * 8) + (Agility * 2);
 }

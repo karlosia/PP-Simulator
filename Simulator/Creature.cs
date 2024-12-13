@@ -7,40 +7,16 @@
 
     public string Name
     {
-        get => name;
+        get { return name;  }
         init
         {
-            if (string.IsNullOrWhiteSpace(value))
-            {
-                name = "Unknown";
-            }
-            else
-            {
-                string trimmed = value.Trim();
-                if (trimmed.Length < 3)
-                {
-                    trimmed = trimmed.PadRight(3, '#');
-                }
-                else if (trimmed.Length > 25)
-                {
-                    trimmed = trimmed.Substring(0, 25).TrimEnd();
-                    if (trimmed.Length < 3)
-                    {
-                        trimmed = trimmed.PadRight(3, '#');
-                    }
-                }
-                if (char.IsLower(trimmed[0]))
-                {
-                    trimmed = char.ToUpper(trimmed[0]) + trimmed.Substring(1);
-                }
-                name = trimmed;
-            }
+            name = Validator.Shortener(value, 3, 25, '#');
         }
     }
     public int Level
     {
-        get => level;
-        init { level = Math.Clamp(value, 1, 10); }
+        get { return level; }
+        init { level = Validator.Limiter(value, 1, 10); }
     }
 
     public Creature(string name, int level=1)
@@ -70,9 +46,14 @@
     }
     public Creature() { }
 
-    public string Info => $"Name:{Name} [{Level}]";
+    public abstract string Info { get; }
 
     public abstract void SayHi();
+
+    public override string ToString()
+    {
+        return $"{GetType().Name.ToUpper()}: {Name} [{Level}] {Info}";
+    }
     public abstract int Power { get; }
 
     public void Upgrade()

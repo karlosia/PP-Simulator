@@ -4,8 +4,8 @@ public class Orc : Creature
     private int rage;
     public int Rage
     {
-        get => rage;
-        set => rage = value < 0 ? 0 : (value > 10 ? 10 : value);
+        get { return rage;  }
+        init { rage = Validator.Limiter(value, 0, 10); }
     }
 
     public Orc() : base() { }
@@ -29,11 +29,12 @@ public class Orc : Creature
 
         if (huntCount % 2 == 0)
         {
-            Rage = Rage < 10 ? Rage + 1 : 10;
+            rage++;
             Console.WriteLine($"{Name}'s rage increased to {Rage}!");
         }
     }
     public override int Power => (Level * 7) + (Rage * 3);
+    public override string Info => $"[{Rage}]";
 }
 
     
