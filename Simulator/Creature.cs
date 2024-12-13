@@ -49,6 +49,25 @@
         Level = level;
     }
 
+    public void Go(Direction direction)
+    {
+        string directionStr = direction.ToString().ToLower();
+        Console.WriteLine($"{Name} goes {directionStr}.");
+    }
+
+    public void Go(Direction[] directions)
+    {
+        foreach (var direction in directions)
+        {
+            Go(direction);
+        }
+    }
+
+    public void Go(string directions)
+    {
+        var parsedDirections = DirectionParser.Parse(directions);
+        Go(parsedDirections);
+    }
     public Creature() { }
 
     public string Info => $"Name:{Name} [{Level}]";
