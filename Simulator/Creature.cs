@@ -25,30 +25,25 @@
         Level = level;
     }
 
-    public void Go(Direction direction)
-    {
-        string directionStr = direction.ToString().ToLower();
-        Console.WriteLine($"{Name} goes {directionStr}.");
-    }
+    public string Go(Direction direction) => $" {direction.ToString().ToLower()}";
 
-    public void Go(Direction[] directions)
+    public string[] Go(Direction[] directions)
     {
-        foreach (var direction in directions)
+        List<string> moves = new List<string>();
+        foreach (Direction direction in directions) 
         {
-            Go(direction);
+            moves.Add(Go(direction));
         }
+        return moves.ToArray();
     }
 
-    public void Go(string directions)
-    {
-        var parsedDirections = DirectionParser.Parse(directions);
-        Go(parsedDirections);
-    }
+    public string[] Go(string directions) => Go(DirectionParser.Parse(directions));
+    
     public Creature() { }
 
     public abstract string Info { get; }
 
-    public abstract void SayHi();
+    public abstract string Greeting();
 
     public override string ToString()
     {

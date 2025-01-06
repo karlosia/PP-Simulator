@@ -1,6 +1,7 @@
-﻿namespace Simulator;
-
+﻿using Simulator;
 using Simulator.Maps;
+
+namespace Runner;
 internal class Program
 {
     static void Main(string[] args)
@@ -31,7 +32,7 @@ internal class Program
 
         Map map = new SmallSquareMap(10);
         Console.WriteLine("Mapa o rozmiarze 10 została utworzona.");
-        
+
         Point point1 = new Point(7, 3);
         Point point2 = new Point(12, 12);
 

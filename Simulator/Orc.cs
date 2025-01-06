@@ -15,16 +15,15 @@ public class Orc : Creature
         Rage = rage;
     }
 
-    public override void SayHi()
+    public override string Greeting()
     {
-        Console.WriteLine($"Hi, I am {Name}, an Orc with {Rage} rage!");
+        return $"Hi, I am {Name}, an Orc with {Rage} rage!";
     }
 
     private int huntCount = 0;
     public void Hunt()
     {
         huntCount++;
-        Console.WriteLine($"{Name} is hunting.");
 
 
         if (huntCount % 2 == 0)

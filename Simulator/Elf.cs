@@ -16,16 +16,16 @@
         Agility = agility;
     }
 
-    public override void SayHi()
+    public override string Greeting()
+
     {
-        Console.WriteLine($"Hi, I am {Name}, an Elf with {Agility} agility!");
+        return $"Hi, I am {Name}, an Elf with {Agility} agility!";
     }
 
     private int singCount = 0;
     public void Sing()
     {
         singCount++;
-        Console.WriteLine($"{Name} is singing.");
 
         if (singCount % 3 == 0)
         {
