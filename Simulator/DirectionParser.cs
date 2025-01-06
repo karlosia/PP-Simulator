@@ -1,6 +1,6 @@
 ﻿namespace Simulator
 {
-    internal class DirectionParser
+    public class DirectionParser
     {
         public static Direction[] Parse(string directions)
         {
