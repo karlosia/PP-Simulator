@@ -11,6 +11,11 @@ public static class Validator
 
         string trimmed = value.Trim();
 
+        if (trimmed.Length > 0 && char.IsLower(trimmed[0]))
+        {
+            trimmed = char.ToUpper(trimmed[0]) + trimmed.Substring(1);
+        }
+
         if (trimmed.Length < min)
         {
 
