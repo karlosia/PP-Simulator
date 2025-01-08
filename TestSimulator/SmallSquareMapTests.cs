@@ -10,9 +10,12 @@ namespace TestSimulator
         [InlineData(6)]
         [InlineData(15)]
         [InlineData(18)]
-        public void CreateMap_WithValidSize_ShouldSucceed(int size) =>
+        public void CreateMap_WithValidSize_ShouldSucceed(int size)
+        {
             // Act
-            Assert.Equal(size, new SmallSquareMap(size).Size);
+            Assert.Equal(size, new SmallSquareMap(size).SizeX);
+            Assert.Equal(size, new SmallSquareMap(size).SizeY);
+        }
 
         [Theory]
         // Arrange

@@ -37,8 +37,9 @@
         return moves.ToArray();
     }
 
-    public string[] Go(string directions) => Go(DirectionParser.Parse(directions));
-    
+    public string[] Go(string directions) => Go(DirectionParser.Parse(directions).ToArray());
+
+
     public Creature() { }
 
     public abstract string Info { get; }
