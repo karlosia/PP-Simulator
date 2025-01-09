@@ -1,9 +1,12 @@
-﻿namespace Simulator;
+﻿using Simulator.Maps;
+
+namespace Simulator;
     public abstract class Creature
     {
     public string name = "Unknown";
     private int level = 1;
-
+    public Map? CurrentMap { get; private set; } 
+    public Point CurrentPosition { get; private set; } 
 
     public string Name
     {
@@ -25,20 +28,38 @@
         Level = level;
     }
 
-    public string Go(Direction direction) => $" {direction.ToString().ToLower()}";
-
-    public string[] Go(Direction[] directions)
+    public void AssignToMap(Map map, Point position)
     {
-        List<string> moves = new List<string>();
-        foreach (Direction direction in directions) 
-        {
-            moves.Add(Go(direction));
-        }
-        return moves.ToArray();
+        if (CurrentMap != null)
+            throw new InvalidOperationException("Stwór jest już przypisany do mapy.");
+
+        CurrentMap = map;
+        CurrentPosition = position;
+
+        map.Add(this, position);
     }
 
-    public string[] Go(string directions) => Go(DirectionParser.Parse(directions).ToArray());
+    public void Go(Direction direction)
+    {
+        if (CurrentMap == null)
+            throw new InvalidOperationException("Stwór nie jest przypisany do żadnej mapy.");
 
+        Point newPosition = CurrentMap.Next(CurrentPosition, direction);
+
+        MoveTo(newPosition);
+    }
+
+    private void MoveTo(Point newPosition)
+    {
+        if (CurrentMap == null)
+            throw new InvalidOperationException("Stwór nie jest przypisany do żadnej mapy.");
+
+        CurrentMap.Remove(this, CurrentPosition);
+
+        CurrentMap.Add(this, newPosition);
+
+        CurrentPosition = newPosition;
+    }
 
     public Creature() { }
 

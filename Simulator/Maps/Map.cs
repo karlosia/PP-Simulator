@@ -14,6 +14,22 @@ public abstract class Map
     /// <summary>
     /// Check if give point belongs to the map.
     /// </summary>
+    /// 
+    public abstract void Remove(Creature creature, Point point);
+    public abstract void Add(Creature creature, Point point);
+
+    public void Move(Creature creature, Point position, Point nextposition)
+    {
+        if (!mapArea.Contains(position) || !mapArea.Contains(nextposition))
+        {
+            throw new ArgumentOutOfRangeException("Punkty muszą znajdować się w obrębie mapy.");
+        }
+
+
+        Remove(creature, position);
+        Add(creature, nextposition);
+    }
+
     protected Map(int sizeX, int sizeY)
     {
         if (sizeY < 5 || sizeX < 5)
@@ -24,6 +40,10 @@ public abstract class Map
         SizeX = sizeX;
         mapArea = new Rectangle(0, 0, SizeX-1, SizeY-1);
     }
+
+    public abstract List<Creature> At(Point point);
+
+    public abstract List<Creature> At(int x, int y);
     public bool Exist(Point p)
     {
 
