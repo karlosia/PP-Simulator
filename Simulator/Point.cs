@@ -10,8 +10,8 @@ public readonly struct Point
         {
         return direction switch
         {
-            Direction.Up => new Point(X, Y + 1),
-            Direction.Down => new Point(X, Y - 1),
+            Direction.Up => new Point(X, Y - 1),
+            Direction.Down => new Point(X, Y + 1),
             Direction.Right => new Point(X + 1, Y),
             Direction.Left => new Point(X - 1, Y),
             _ => throw new ArgumentOutOfRangeException(nameof(direction), $"Invalid direction: {direction}")
