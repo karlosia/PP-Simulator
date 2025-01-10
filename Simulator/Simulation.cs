@@ -10,21 +10,21 @@ namespace Simulator
     public class Simulation
     {
         public Map Map { get; }
-        public List<Creature> Creatures { get; }
+        public List<IMappable> Mappables { get; }
         public List<Point> Positions { get; }
-        private int currentCreatureIndex = 0;
+        private int currentMappableIndex = 0;
         public string Moves { get; }
         public bool Finished { get; set; } = false;
 
         /// <summary>
         /// Creature which will be moving current turn.
         /// </summary>
-        public Creature CurrentCreature => Creatures[currentCreatureIndex];
+        public IMappable CurrentMappable => Mappables[currentMappableIndex];
 
         /// <summary>
         /// Lowercase name of direction which will be used in current turn.
         /// </summary>
-        public string CurrentMoveName => Moves[currentCreatureIndex].ToString().ToLower();
+        public string CurrentMoveName => Moves[currentMappableIndex].ToString().ToLower();
 
         /// <summary>
         /// Simulation constructor.
@@ -33,54 +33,58 @@ namespace Simulator
         /// if number of creatures differs from 
         /// number of starting positions.
         /// </summary>
-        public Simulation(Map map, List<Creature> creatures,
+        public Simulation(Map map, List<IMappable> mappables,
             List<Point> positions, string moves)
         {
-            if (creatures.Count == 0)
+            if (mappables.Count == 0)
                 throw new ArgumentException("Lista stworów nie może być pusta.");
 
-            if (creatures.Count != positions.Count)
+            if (mappables.Count != positions.Count)
                 throw new ArgumentException("Liczba stworów musi odpowiadać liczbie początkowych pozycji.");
 
             Map = map;
-            Creatures = creatures;
+            Mappables = mappables;
             Positions = positions;
             Moves = moves;
 
-            for (int i = 0; i < creatures.Count; i++)
+            for (int i = 0; i < mappables.Count; i++)
             {
-                creatures[i].AssignToMap(map, positions[i]);
+                mappables[i].AssignToMap(map, positions[i]);
             }
         }
 
         public void Turn() {
             if (Finished)
                 throw new InvalidOperationException("Symulacja została zakończona.");
+            if (currentMappableIndex >= Moves.Length)
+            {
+                Finished = true; 
+                return;
+            }
 
-            
             var directions = DirectionParser.Parse(CurrentMoveName);
 
             foreach (var direction in directions)
             {
                 try
                 {
-                    
-                    CurrentCreature.Go(direction);
+
+                    CurrentMappable.Go(direction);
                 }
                 catch (Exception ex)
                 {
                     
-                    Console.WriteLine($"Błąd ruchu dla {CurrentCreature.Name}: {ex.Message}");
+                    Console.WriteLine($"Błąd ruchu dla obiektu: {ex.Message}");
                 }
             }
 
-            
-            currentCreatureIndex++;
+
+            currentMappableIndex++;
 
             
-            if (currentCreatureIndex >= Creatures.Count)
+            if (currentMappableIndex >= Mappables.Count)
             {
-                currentCreatureIndex = 0;
+                currentMappableIndex = 0;
             }
         }
     }

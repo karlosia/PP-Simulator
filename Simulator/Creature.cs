@@ -1,12 +1,12 @@
 ﻿using Simulator.Maps;
 
 namespace Simulator;
-    public abstract class Creature
+    public abstract class Creature : IMappable
     {
     public string name = "Unknown";
     private int level = 1;
-    public Map? CurrentMap { get; private set; } 
-    public Point CurrentPosition { get; private set; } 
+    public Map? CurrentMap { get; private set; }
+    public Point CurrentPosition { get; set; }
 
     public string Name
     {
@@ -28,25 +28,19 @@ namespace Simulator;
         Level = level;
     }
 
-    public void AssignToMap(Map map, Point position)
+    public void AssignToMap(Map map, Point point)
     {
-        if (CurrentMap != null)
-            throw new InvalidOperationException("Stwór jest już przypisany do mapy.");
-
         CurrentMap = map;
-        CurrentPosition = position;
-
-        map.Add(this, position);
+        CurrentPosition = point;
+        map.Add(this, point);
     }
 
-    public void Go(Direction direction)
+    public string Go(Direction direction)
     {
-        if (CurrentMap == null)
-            throw new InvalidOperationException("Stwór nie jest przypisany do żadnej mapy.");
-
-        Point newPosition = CurrentMap.Next(CurrentPosition, direction);
-
-        MoveTo(newPosition);
+        var nextPosition = CurrentMap.Next(CurrentPosition, direction);
+        CurrentMap.Move(this, CurrentPosition, nextPosition);
+        CurrentPosition = nextPosition;
+        return $"{direction.ToString().ToLower()}";
     }
 
     private void MoveTo(Point newPosition)
@@ -72,6 +66,8 @@ namespace Simulator;
         return $"{GetType().Name.ToUpper()}: {Name} [{Level}] {Info}";
     }
     public abstract int Power { get; }
+
+    public Point GetPosition() => CurrentPosition;
 
     public void Upgrade()
     {

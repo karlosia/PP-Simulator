@@ -15,10 +15,10 @@ public abstract class Map
     /// Check if give point belongs to the map.
     /// </summary>
     /// 
-    public abstract void Remove(Creature creature, Point point);
-    public abstract void Add(Creature creature, Point point);
+    public abstract void Remove(IMappable mappable, Point point);
+    public abstract void Add(IMappable mappable, Point point);
 
-    public void Move(Creature creature, Point position, Point nextposition)
+    public void Move(IMappable mappable, Point position, Point nextposition)
     {
         if (!mapArea.Contains(position) || !mapArea.Contains(nextposition))
         {
@@ -26,8 +26,8 @@ public abstract class Map
         }
 
 
-        Remove(creature, position);
-        Add(creature, nextposition);
+        Remove(mappable, position);
+        Add(mappable, nextposition);
     }
 
     protected Map(int sizeX, int sizeY)
@@ -41,9 +41,9 @@ public abstract class Map
         mapArea = new Rectangle(0, 0, SizeX-1, SizeY-1);
     }
 
-    public abstract List<Creature> At(Point point);
+    public abstract List<IMappable> At(Point point);
 
-    public abstract List<Creature> At(int x, int y);
+    public abstract List<IMappable> At(int x, int y);
     public bool Exist(Point p)
     {
 
