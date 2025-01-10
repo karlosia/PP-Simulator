@@ -12,31 +12,53 @@ namespace SimConsole
             Console.OutputEncoding = Encoding.UTF8;
 
 
-            SmallSquareMap map = new(5);
-            List<IMappable> creatures = [new Orc("Gorbag"), new Elf("Elandor")];
-            List<Point> points = [new(2, 2), new(3, 1)];
-            string moves = "dlrludlru";
+            SmallTorusMap map = new SmallTorusMap(8, 6);
+
+            
+            List<IMappable> creatures = new List<IMappable>
+            {
+                new Orc("Gorbag"),
+                new Elf("Elandor"),
+                new Animals("Rabbit",false),  
+                new Birds("Eagle",true),     
+                new Birds("Ostrich",false)   
+            };
+
+            
+            List<Point> points = new List<Point>
+            {
+                new(2, 2), 
+                new(3, 1), 
+                new(1, 3), 
+                new(5, 5),
+                new(6, 4)  
+            };
+
+            
+            string moves = "dlrludlru"; 
             Simulation simulation = new Simulation(map, creatures, points, moves);
+
+            
             MapVisualizer mapVisualizer = new(simulation.Map);
+
 
             mapVisualizer.Draw();
 
             while (!simulation.Finished)
             {
                 Console.WriteLine("Press any key to continue...");
-                Console.ReadKey();  // Czekaj na naciśnięcie klawisza
+                Console.ReadKey();
 
-                // Wyświetl turę
+                
                 Console.WriteLine($"\nTurn: {turn}");
                 Console.WriteLine($"{simulation.CurrentMappable} {simulation.CurrentMappable.CurrentPosition} goes {simulation.CurrentMoveName}:");
 
-                // Wykonaj turę
+                
                 simulation.Turn();
 
-                // Wyświetl stan mapy po ruchu
+                
                 mapVisualizer.Draw();
 
-                // Zwiększ numer tury
                 turn++;
 
             }

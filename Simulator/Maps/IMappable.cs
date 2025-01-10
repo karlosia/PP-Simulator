@@ -25,6 +25,11 @@
         Point CurrentPosition { get; set; }
 
         /// <summary>
+        /// Symbol representation for visualization.
+        /// </summary>
+        string Symbol { get; }
+
+        /// <summary>
         /// Returns the name or description of the creature.
         /// </summary>
         /// <returns>String representation of the creature.</returns>

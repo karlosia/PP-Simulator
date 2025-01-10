@@ -8,6 +8,8 @@ namespace Simulator;
     public Map? CurrentMap { get; private set; }
     public Point CurrentPosition { get; set; }
 
+    public virtual string Symbol => "C";
+
     public string Name
     {
         get { return name;  }
@@ -61,10 +63,7 @@ namespace Simulator;
 
     public abstract string Greeting();
 
-    public override string ToString()
-    {
-        return $"{GetType().Name.ToUpper()}: {Name} [{Level}] {Info}";
-    }
+    
     public abstract int Power { get; }
 
     public Point GetPosition() => CurrentPosition;
@@ -72,5 +71,11 @@ namespace Simulator;
     public void Upgrade()
     {
         level = Math.Min(level + 1, 10);
+
     }
+    public override string ToString()
+    {
+        return $"{GetType().Name.ToUpper()}: {Name} [{Level}] {Info}";
+    }
+
 }

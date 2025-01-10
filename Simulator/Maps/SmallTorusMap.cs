@@ -5,9 +5,6 @@ namespace Simulator.Maps;
 public class SmallTorusMap : SmallMap
 {
 
-    public int Size { get;  }
-
-
     public SmallTorusMap(int sizeX, int sizeY) : base(sizeX, sizeY)
     {
         

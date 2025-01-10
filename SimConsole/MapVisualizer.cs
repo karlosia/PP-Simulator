@@ -33,14 +33,33 @@ namespace SimConsole
                 {
                     Point point = new Point(x, y);
                     var creatures = _map.At(point); // At zwraca listę stworów w danym punkcie
+
                     if (creatures.Count == 1)
                     {
                         // Wizualizowanie stworów
                         var creature = creatures[0];
-                        if (creature is Orc)
+
+                        if (creature is Animals animal)
+                        {
+                            if (animal.CanFly)
+                            {
+                                // Ptaki latające
+                                Console.Write("B");
+                            }
+                            else
+                            {
+                                // Nieloty
+                                Console.Write("b");
+                            }
+                        }
+                        else if (creature is Orc)
+                        {
                             Console.Write("O");
+                        }
                         else if (creature is Elf)
+                        {
                             Console.Write("E");
+                        }
                     }
                     else if (creatures.Count > 1)
                     {
@@ -62,5 +81,9 @@ namespace SimConsole
                 Console.Write(Box.Horizontal);
             Console.WriteLine(Box.BottomRight);
         }
+
     }
 }
+
+
+
