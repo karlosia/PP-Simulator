@@ -2,7 +2,7 @@
 {
     public interface IMappable
     {
-
+        char Symbol { get; }
         /// <summary>
         /// Assigns the creature to a specific map and position.
         /// </summary>
@@ -16,6 +16,8 @@
         /// <param name="direction">Direction to move in.</param>
         /// <returns>Status or result of the move.</returns>
         string Go(Direction direction);
+        string ToString();
+
 
         /// <summary>
         /// Returns the current position of the creature.
@@ -27,12 +29,12 @@
         /// <summary>
         /// Symbol representation for visualization.
         /// </summary>
-        string Symbol { get; }
+
 
         /// <summary>
         /// Returns the name or description of the creature.
         /// </summary>
         /// <returns>String representation of the creature.</returns>
-        string ToString();
+
     }
 }

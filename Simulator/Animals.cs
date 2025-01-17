@@ -4,7 +4,7 @@ namespace Simulator;
 public class Animals : IMappable
 {
     private string description = "Unknown";
-    public virtual string Symbol { get; set; } = "A";
+    public virtual char Symbol { get; set; } = 'A';
     public string Name { get; set; }
     public bool CanFly { get; set; }
     public Point CurrentPosition { get; set; }
@@ -23,20 +23,20 @@ public class Animals : IMappable
         init
         {
             description = Validator.Shortener(value, 3, 15, '#');
-            }
         }
+    }
     public virtual string Go(Direction direction)
     {
         Point nextPosition;
         if (CanFly)
         {
-            
+
             nextPosition = CurrentMap.Next(CurrentPosition, direction);
             nextPosition = CurrentMap.Next(nextPosition, direction);
         }
         else
         {
-            
+
             nextPosition = CurrentMap.NextDiagonal(CurrentPosition, direction);
         }
 

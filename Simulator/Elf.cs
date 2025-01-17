@@ -1,15 +1,16 @@
 ﻿namespace Simulator;
 
-    public class Elf : Creature
+public class Elf : Creature
 {
     private int agility;
     public int Agility
     {
-        get { return agility;  }
+        get { return agility; }
         init { agility = Validator.Limiter(value, 0, 10); }
     }
 
     public Elf() : base() { }
+    public override char Symbol => 'E';
 
     public Elf(string name = "Unknown", int level = 1, int agility = 1) : base(name, level)
     {
@@ -29,7 +30,7 @@
 
         if (singCount % 3 == 0)
         {
-            agility++; 
+            agility++;
             Console.WriteLine($"{Name}'s agility increased to {Agility}!");
         }
     }

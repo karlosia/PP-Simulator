@@ -1,89 +1,62 @@
-﻿using Simulator;
+﻿
 using Simulator.Maps;
+using Simulator;
 
-namespace SimConsole
+namespace SimConsole;
+
+public class MapVisualizer
 {
-    public class MapVisualizer
+    private readonly Map _map;
+    public MapVisualizer(Map map)
     {
-        private readonly Map _map;
+        _map = map;
+    }
 
-        public MapVisualizer(Map map)
+    public void Draw()
+    {
+        Console.Write(Box.TopLeft);
+        for (int i = 0; i < _map.SizeX - 1; i++)
         {
-            _map = map;
+            Console.Write($"{Box.Horizontal}{Box.TopMid}");
         }
+        Console.WriteLine($"{Box.Horizontal}{Box.TopRight}");
 
-        public void Draw()
+        for (int row = 0; row < _map.SizeY; row++)
         {
-            Console.Clear();
-            int width = _map.SizeX;  // Używamy SizeX
-            int height = _map.SizeY; // Używamy SizeY
-
-            // Rysowanie górnej linii
-            Console.Write(Box.TopLeft);
-            for (int x = 0; x < width; x++) // Używamy SizeX
-                Console.Write(Box.Horizontal);
-            Console.WriteLine(Box.TopRight);
-
-            // Rysowanie linii z mapą
-            for (int y = 0; y < height; y++) // Używamy SizeY
+            Console.Write(Box.Vertical);
+            for (int col = 0; col < _map.SizeX; col++)
             {
-                Console.Write(Box.Vertical);
-
-                for (int x = 0; x < width; x++) // Używamy SizeX
+                if (_map.At(col, row).Count > 1)
                 {
-                    Point point = new Point(x, y);
-                    var creatures = _map.At(point); // At zwraca listę stworów w danym punkcie
-
-                    if (creatures.Count == 1)
-                    {
-                        // Wizualizowanie stworów
-                        var creature = creatures[0];
-
-                        if (creature is Animals animal)
-                        {
-                            if (animal.CanFly)
-                            {
-                                // Ptaki latające
-                                Console.Write("B");
-                            }
-                            else
-                            {
-                                // Nieloty
-                                Console.Write("b");
-                            }
-                        }
-                        else if (creature is Orc)
-                        {
-                            Console.Write("O");
-                        }
-                        else if (creature is Elf)
-                        {
-                            Console.Write("E");
-                        }
-                    }
-                    else if (creatures.Count > 1)
-                    {
-                        // Więcej niż jedno stworzenie w tym samym miejscu
-                        Console.Write("X");
-                    }
-                    else
-                    {
-                        Console.Write(" ");
-                    }
+                    Console.Write($"X{Box.Vertical}");
                 }
-
-                Console.WriteLine(Box.Vertical);
+                else if (_map.At(col, row).Count == 1)
+                {
+                    Console.Write($"{_map.At(col, row)[0].Symbol}{Box.Vertical}");
+                }
+                else
+                    Console.Write($" {Box.Vertical}");
             }
 
-            // Rysowanie dolnej linii
-            Console.Write(Box.BottomLeft);
-            for (int x = 0; x < width; x++) // Używamy SizeX
-                Console.Write(Box.Horizontal);
-            Console.WriteLine(Box.BottomRight);
-        }
+            Console.WriteLine();
 
+            if (row < _map.SizeY - 1)
+            {
+                Console.Write(Box.MidLeft);
+                for (int col = 0; col < _map.SizeX - 1; col++)
+                {
+                    Console.Write($"{Box.Horizontal}{Box.Cross}");
+                }
+                Console.WriteLine($"{Box.Horizontal}{Box.MidRight}");
+            }
+        }
+        Console.Write(Box.BottomLeft);
+        for (int i = 0; i < _map.SizeX - 1; i++)
+        {
+            Console.Write($"{Box.Horizontal}{Box.BottomMid}");
+        }
+        Console.WriteLine($"{Box.Horizontal}{Box.BottomRight}");
     }
 }
-
 
 

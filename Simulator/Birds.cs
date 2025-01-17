@@ -2,10 +2,10 @@
 {
     public class Birds : Animals
     {
-        public Birds(string name,bool canFly)
+        public Birds(string name, bool canFly)
             : base(name, canFly)
         {
-           Symbol = CanFly ? "B" : "b";
+            Symbol = CanFly ? 'B' : 'b';
         }
 
         public override string Info
