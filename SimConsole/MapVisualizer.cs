@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-﻿using Simulator.Maps;
-=======
-﻿
 using Simulator.Maps;
->>>>>>> 50bc5d5eec389daf156ddc850ca423cadc85bdb0
 using Simulator;
 
 namespace SimConsole;
@@ -62,8 +57,4 @@ public class MapVisualizer
         Console.WriteLine($"{Box.Horizontal}{Box.BottomRight}");
     }
 }
-<<<<<<< HEAD
-=======
 
-
->>>>>>> 50bc5d5eec389daf156ddc850ca423cadc85bdb0

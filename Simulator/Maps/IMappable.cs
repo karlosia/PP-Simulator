@@ -29,20 +29,6 @@
         /// <summary>
         /// Symbol representation for visualization.
         /// </summary>
-<<<<<<< HEAD
-        
-=======
 
->>>>>>> 50bc5d5eec389daf156ddc850ca423cadc85bdb0
-
-        /// <summary>
-        /// Returns the name or description of the creature.
-        /// </summary>
-        /// <returns>String representation of the creature.</returns>
-<<<<<<< HEAD
-        
-=======
-
->>>>>>> 50bc5d5eec389daf156ddc850ca423cadc85bdb0
     }
 }
