@@ -13,8 +13,9 @@ namespace Simulator
         public List<IMappable> Mappables { get; }
         public List<Point> Positions { get; }
         private int currentMappableIndex = 0;
+        private int currentMoveIndex = 0;
         public string Moves { get; }
-        public bool Finished { get; set; } = false;
+        public bool Finished { get; private set; } = false;
 
         /// <summary>
         /// Creature which will be moving current turn.
@@ -56,36 +57,26 @@ namespace Simulator
         public void Turn() {
             if (Finished)
                 throw new InvalidOperationException("Symulacja została zakończona.");
-            if (currentMappableIndex >= Moves.Length)
+
+
+            IMappable creature = CurrentMappable;
+            Direction direction = DirectionParser.Parse(Moves)[currentMoveIndex];
+
+            creature.Go(direction);
+
+            currentMoveIndex++;
+            if (currentMoveIndex >= Moves.Length)
             {
-                Finished = true; 
-                return;
+                Finished = true;
             }
-
-            var directions = DirectionParser.Parse(CurrentMoveName);
-
-            foreach (var direction in directions)
-            {
-                try
-                {
-
-                    CurrentMappable.Go(direction);
-                }
-                catch (Exception ex)
-                {
-                    
-                    Console.WriteLine($"Błąd ruchu dla obiektu: {ex.Message}");
-                }
-            }
-
 
             currentMappableIndex++;
-
-            
             if (currentMappableIndex >= Mappables.Count)
             {
                 currentMappableIndex = 0;
             }
+
+
         }
     }
 }

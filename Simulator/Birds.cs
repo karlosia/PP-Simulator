@@ -5,7 +5,11 @@
         public Birds(string name, bool canFly)
             : base(name, canFly)
         {
+<<<<<<< HEAD
+           Symbol = CanFly ? 'B' : 'b';
+=======
             Symbol = CanFly ? 'B' : 'b';
+>>>>>>> 50bc5d5eec389daf156ddc850ca423cadc85bdb0
         }
 
         public override string Info
