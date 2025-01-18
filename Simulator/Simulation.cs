@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Simulator.Maps;
 
 namespace Simulator
@@ -14,7 +11,7 @@ namespace Simulator
         public List<Point> Positions { get; }
         private int currentMappableIndex = 0;
         private int currentMoveIndex = 0;
-        public string Moves { get; }
+        public string Moves { get; set; }
         public bool Finished { get; private set; } = false;
 
         /// <summary>
@@ -25,17 +22,25 @@ namespace Simulator
         /// <summary>
         /// Lowercase name of direction which will be used in current turn.
         /// </summary>
-        public string CurrentMoveName => Moves[currentMappableIndex].ToString().ToLower();
+        public string CurrentMoveName
+        {
+            get
+            {
+                // Sprawdzamy, czy Moves jest puste
+                if (string.IsNullOrEmpty(Moves))
+                {
+                    throw new InvalidOperationException("Lista ruchów nie może być pusta.");
+                }
+
+                // Cyfliczne przechodzenie po Moves, aby uniknąć przekroczenia zakresu
+                return Moves[currentMoveIndex % Moves.Length].ToString().ToLower();
+            }
+        }
 
         /// <summary>
-        /// Simulation constructor.
-        /// Throw errors:
-        /// if creatures' list is empty,
-        /// if number of creatures differs from 
-        /// number of starting positions.
+        /// Konstruktor symulacji
         /// </summary>
-        public Simulation(Map map, List<IMappable> mappables,
-            List<Point> positions, string moves)
+        public Simulation(Map map, List<IMappable> mappables, List<Point> positions, string moves)
         {
             if (mappables.Count == 0)
                 throw new ArgumentException("Lista stworów nie może być pusta.");
@@ -46,7 +51,9 @@ namespace Simulator
             Map = map;
             Mappables = mappables;
             Positions = positions;
-            Moves = moves;
+
+            // Upewnij się, że Moves nie jest puste, jeśli nie, ustaw domyślną wartość
+            Moves = string.IsNullOrEmpty(moves) ? "rrrrrrrrr" : moves;
 
             for (int i = 0; i < mappables.Count; i++)
             {
@@ -54,29 +61,35 @@ namespace Simulator
             }
         }
 
-        public void Turn() {
+        public void Turn()
+        {
             if (Finished)
                 throw new InvalidOperationException("Symulacja została zakończona.");
 
-
+            // Upewnij się, że indeks ruchu mieści się w zakresie
             IMappable creature = CurrentMappable;
-            Direction direction = DirectionParser.Parse(Moves)[currentMoveIndex];
 
+            // Użyj operatora % aby cyklicznie powtarzać ruchy, jeśli ich liczba jest mniejsza niż liczba stworów
+            Direction direction = DirectionParser.Parse(Moves)[currentMoveIndex % Moves.Length];
+
+            // Wykonanie ruchu
             creature.Go(direction);
 
+            // Zwiększenie indeksu dla ruchów
             currentMoveIndex++;
+
+            // Sprawdzamy, czy symulacja się zakończyła
             if (currentMoveIndex >= Moves.Length)
             {
                 Finished = true;
             }
 
+            // Zwiększenie indeksu dla stworów
             currentMappableIndex++;
             if (currentMappableIndex >= Mappables.Count)
             {
-                currentMappableIndex = 0;
+                currentMappableIndex = 0;  // Resetujemy indeks stworów
             }
-
-
         }
     }
 }

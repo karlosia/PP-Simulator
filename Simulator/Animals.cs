@@ -37,7 +37,7 @@ public class Animals : IMappable
         else
         {
 
-            nextPosition = CurrentMap.NextDiagonal(CurrentPosition, direction);
+            nextPosition = CurrentMap.Next(CurrentPosition, direction);
         }
 
         CurrentMap.Move(this, CurrentPosition, nextPosition);

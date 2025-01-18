@@ -33,8 +33,10 @@
             }
             else
             {
-                // Nieloty poruszają się po skosie o jedno pole
-                nextPosition = CurrentMap.NextDiagonal(CurrentPosition, direction);
+                // Nieloty o trzy pola
+                nextPosition = CurrentMap.Next(CurrentPosition, direction);
+                nextPosition = CurrentMap.Next(nextPosition, direction);
+                nextPosition = CurrentMap.Next(nextPosition, direction);
             }
 
             CurrentMap.Move(this, CurrentPosition, nextPosition);

@@ -15,6 +15,12 @@
         <!-- Przycisk do przejścia do następnej tury -->
         <button type="submit" asp-page-handler="NextTurn">→</button>
     </form>
+
+    <form asp-page="/Index" method="post">
+        <label for="moves">Wpisz ruchy (u, d, l, r): </label>
+        <input type="text" id="moves" name="moves" placeholder="Wpisz ruchy" required pattern="[udlr]+" />
+        <button type="submit" asp-page-handler="SetMoves">Utwórz turę</button>
+    </form>
 </div>
 
 <div class="log-container">
